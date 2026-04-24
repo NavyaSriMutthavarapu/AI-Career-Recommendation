@@ -13,7 +13,7 @@ def predict_top_roles_with_scores(text):
     roles = label_encoder.inverse_transform(top_indices)
     scores = probs[top_indices]
 
-    #  BOOST LOGIC (ADD HERE)
+    #  BOOST LOGIC
    
 
     text_lower = text.lower()
