@@ -7,31 +7,14 @@ from role_data import job_roles
 from resume_utils import extract_text_from_pdf
 
 
-# -----------------------------
-# LOAD RELATED ROLES
-# -----------------------------
 role_to_titles = joblib.load("role_to_titles.pkl")
-
-
-# -----------------------------
-# PAGE CONFIG
-# -----------------------------
 st.set_page_config(page_title="AI Career Advisor", layout="centered")
 
 st.title("🚀 AI Career Advisor")
 st.write("Upload your resume or enter your skills")
-
-
-# -----------------------------
-# INPUT
-# -----------------------------
 user_input = st.text_area("📝 Enter your skills or resume text", height=150)
 uploaded_file = st.file_uploader("📄 Upload Resume (PDF)", type=["pdf"])
 
-
-# -----------------------------
-# ANALYZE
-# -----------------------------
 if st.button("🚀 Analyze"):
 
     if uploaded_file:
@@ -44,25 +27,15 @@ if st.button("🚀 Analyze"):
     roles, scores = predict_top_roles_with_scores(user_input)
     best_role = roles[0]
 
-    # -----------------------------
-    # CURRENT ROLE
-    # -----------------------------
+   
     st.markdown("## 🧾 Current Role")
     st.success(best_role)
     st.write(f"Confidence: {get_confidence_label(scores[0])}")
-
-    # -----------------------------
-    # TOP MATCHES
-    # -----------------------------
     st.markdown("### 🎯 Top Career Matches")
 
     for i in range(len(roles)):
         st.write(f"{roles[i]} → {round(scores[i]*100, 2)}%")
         st.progress(int(scores[i]*100))
-
-    # -----------------------------
-    # WHY THIS ROLE
-    # -----------------------------
     st.markdown("### 💡 Why this role?")
 
     skills = job_roles.get(best_role, {}).get("skills_required", [])
@@ -74,10 +47,6 @@ if st.button("🚀 Analyze"):
         st.write(f"Based on your skills: {', '.join(matched_skills[:5])}")
     else:
         st.write("Based on overall resume content")
-
-    # -----------------------------
-    # RELATED ROLES (FIXED)
-    # -----------------------------
     st.markdown("### 💼 Related Job Titles")
 
     sub_roles = role_to_titles.get(best_role, [])
@@ -88,10 +57,6 @@ if st.button("🚀 Analyze"):
             st.write(f"👉 {role}")
     else:
         st.write("No related roles found")
-
-    # -----------------------------
-    # SKILL MATCH
-    # -----------------------------
     score, matched = calculate_skill_score(best_role, user_input)
 
     st.markdown(f"### 🧠 Match Score: {score}%")
@@ -107,10 +72,6 @@ if st.button("🚀 Analyze"):
         st.write("✔ Matched Skills:")
         for m in matched[:5]:
             st.write(f"✔ {m}")
-
-    # -----------------------------
-    # SKILL GAP
-    # -----------------------------
     _, missing = get_skill_gap(best_role, user_input)
 
     st.markdown("### ⚠️ Skill Gap")
@@ -124,9 +85,6 @@ if st.button("🚀 Analyze"):
             for skill in missing[:5]:
                 st.write(f"❌ {skill}")
 
-    # -----------------------------
-    # ACTION PLAN
-    # -----------------------------
     st.markdown("### 🚀 Action Plan")
 
     if score >= 70:
