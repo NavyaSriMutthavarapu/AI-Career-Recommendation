@@ -1,4 +1,4 @@
-# 🚀 AI Career Advisor
+# 🚀 AI Career Recommendation
 
 AI Career Advisor is an end-to-end Machine Learning application that analyzes a user’s resume or skills and recommends the most suitable tech career role.
 
