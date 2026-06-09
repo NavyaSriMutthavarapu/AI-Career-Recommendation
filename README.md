@@ -170,7 +170,7 @@ The application provides:
 
 # 🌐 Live Demo
 
-🔗 https://career-recommendations-ng8nh55kurza6ewlsvipax.
+🔗 https://career-recommendations-ng8nh55kurza6ewlsvipax.streamlit.app/
 
 
 # 🎥 Project Demo Video
